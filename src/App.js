@@ -1,26 +1,27 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import ToysContainer from './ToysContainer'
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div id="toy-header">
+        <img
+          src="https://fontmeme.com/permalink/180719/67429e6afec53d21d64643101c43f029.png"
+          alt="toy-header"
+        />
+      </div>
+      <div id="search-bar">
+          <input />
+          <button>Search!</button>
+      </div>
+      <ToysContainer/>
     </div>
   );
 }
 
 export default App;
+
+//A component is a collection of elements that represent a unity in a goal or task
+//As we nest our components, their specifity increased
