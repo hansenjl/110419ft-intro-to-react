@@ -12,29 +12,46 @@ class App extends Component {
   }
 
   componentDidMount(){
+    //fetch request
     this.setState({
       toys: toyData
     })
   }
 
-  addToy = (e) => {
-     //update state to include new toy
-     let newToy = {name: this.state.name, image: this.state.image, likes: 0}
-     this.setState({
-       toys: [...this.state.toys, newToy],
-       name: '',
-       image: ''
-     })
-  }
+  updateLikes = (e) => {
+     let id = parseInt(e.target.id.split('-')[1])
 
-  handleChange = (e) => {
-    //update state to reflect what we typed in the fields
+     this.setState(prevState => {
+       let toy = prevState.toys.find(toy => toy.id === id)
+       let newToys = prevState.toys.filter(toy => toy.id !== id)
+       let newToy = {...toy, likes: toy.likes + 1}
+      return {
+        toys: [...newToys, newToy]
+      }
+     })
+    }
+
+  handleInputChange = (e) => {
     let name = e.target.name
-    this.setState({
-      [name]: e.target.value
+    let value = e.target.value
+    //updateState
+    this.setState( {
+        [name]: value
     })
   }
 
+  addToy = (e) => {
+    //POST request to a backend with your data
+    // update state
+    let newToy = {name: this.state.name, image: this.state.image, likes: 0, id: this.state.toys.length + 1}
+    this.setState(prevState => {
+      return {
+        toys: [...prevState.toys, newToy],
+        name: "",
+        image: ""
+      }
+    })
+  }
 
   render() {
     return (
@@ -48,16 +65,16 @@ class App extends Component {
         <div id="new-toy-form">
             <p>
               <label>Name:</label>
-              <input onChange={this.handleChange} id='toy-name' name='name' value={this.state.name}/>
+              <input onChange={this.handleInputChange} name="name"  id='toy-name' value={this.state.name} />
             </p>
             <p>
               <label>Image url:</label>
-              <input onChange={this.handleChange} id='toy-image' name='image' value={this.state.image}/>
+              <input onChange={this.handleInputChange} name="image" id='toy-image' value={this.state.image}  />
             </p>
             <br />
             <button onClick={this.addToy}>Add Toy!</button>
         </div>
-        <ToysContainer toys={this.state.toys}/>
+        <ToysContainer toys={this.state.toys} updateLikes={this.updateLikes}/>
       </div>
     );
   }
