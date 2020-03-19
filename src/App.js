@@ -19,10 +19,16 @@ class App extends Component {
 
   addToy = (e) => {
      //update state to include new toy
+     let newToy = {name: this.state.name, image: this.state.image, likes: 0}
+     this.setState({
+       toys: [...this.state.toys, newToy],
+       name: '',
+       image: ''
+     })
   }
 
   handleChange = (e) => {
-    //update state to reflect what we typed i nthe fields
+    //update state to reflect what we typed in the fields
     let name = e.target.name
     this.setState({
       [name]: e.target.value
@@ -42,11 +48,11 @@ class App extends Component {
         <div id="new-toy-form">
             <p>
               <label>Name:</label>
-              <input onChange={this.handleChange} id='toy-name' name='name' />
+              <input onChange={this.handleChange} id='toy-name' name='name' value={this.state.name}/>
             </p>
             <p>
               <label>Image url:</label>
-              <input onChange={this.handleChange} id='toy-image' name='image' />
+              <input onChange={this.handleChange} id='toy-image' name='image' value={this.state.image}/>
             </p>
             <br />
             <button onClick={this.addToy}>Add Toy!</button>
