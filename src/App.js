@@ -1,24 +1,60 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
 import ToysContainer from './ToysContainer'
+import {toyData} from './data'
 
-function App() {
-  return (
-    <div className="App">
-      <div id="toy-header">
-        <img
-          src="https://fontmeme.com/permalink/180719/67429e6afec53d21d64643101c43f029.png"
-          alt="toy-header"
-        />
+class App extends Component {
+
+  state = {
+    toys: [],
+    name: "",
+    image: ""
+  }
+
+  componentDidMount(){
+    this.setState({
+      toys: toyData
+    })
+  }
+
+  addToy = (e) => {
+     //update state to include new toy
+  }
+
+  handleChange = (e) => {
+    //update state to reflect what we typed i nthe fields
+    let name = e.target.name
+    this.setState({
+      [name]: e.target.value
+    })
+  }
+
+
+  render() {
+    return (
+      <div className="App">
+        <div id="toy-header">
+          <img
+            src="https://fontmeme.com/permalink/180719/67429e6afec53d21d64643101c43f029.png"
+            alt="toy-header"
+          />
+        </div>
+        <div id="new-toy-form">
+            <p>
+              <label>Name:</label>
+              <input onChange={this.handleChange} id='toy-name' name='name' />
+            </p>
+            <p>
+              <label>Image url:</label>
+              <input onChange={this.handleChange} id='toy-image' name='image' />
+            </p>
+            <br />
+            <button onClick={this.addToy}>Add Toy!</button>
+        </div>
+        <ToysContainer toys={this.state.toys}/>
       </div>
-      <div id="search-bar">
-          <input />
-          <button>Search!</button>
-      </div>
-      <ToysContainer/>
-    </div>
-  );
+    );
+  }
 }
 
 export default App;
